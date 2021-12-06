@@ -51,10 +51,14 @@ powerConsumption report =
   let m = mostCommon report
   in gammaRate m * epsilonRate m
 
+parseReport :: String -> Report
+parseReport = map readBinary . lines
+
 readReport :: FilePath -> IO Report
-readReport filePath = do
-  input <- readFile filePath
-  return $ map readBinary $ lines input
+readReport filePath = fmap parseReport $ readFile filePath
+-- readReport filePath = do
+--   input <- readFile filePath
+--   return $ map readBinary $ lines input
 
 main = do
   report <- readReport "input.txt"
